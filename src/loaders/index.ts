@@ -1,7 +1,6 @@
 import expressLoader from './express';
 import dependencyInjectorLoader from './dependencyInjector';
 import mongooseLoader from './mongoose';
-import jobsLoader from './jobs';
 import Logger from './logger';
 //We have to import at least all the events once so they can be triggered
 
@@ -17,22 +16,25 @@ export default async ({ expressApp }) => {
    * of writing unit tests, just go and check how beautiful they are!
    */
 
+  const playerModel = {
+    name: 'playerModel',
+    model: require('../models/player').default,
+  };
 
-
-  const testModel = {
-    name: 'testModel',
-    // Notice the require syntax and the '.default'
-    model: require('../models/test').default,
+  const sessionModel = {
+    name: 'sessionModel',
+    model: require('../models/session').default,
   };
 
   const { logger } = await dependencyInjectorLoader({
     mongoConnection,
     models: [
-      testModel,
+      playerModel,
+      sessionModel
     ],
   });
-  Logger.info('✌️ Dependency Injector loaded');
 
+  Logger.info('✌️ Dependency Injector loaded');
 
   await expressLoader({ app: expressApp });
   Logger.info('✌️ Express loaded');
