@@ -1,17 +1,17 @@
 import { Container } from 'typedi';
 import { Logger } from 'winston';
 
-export default class EmailSequenceJob {
+export default class UsernameSequenceJob {
   public async handler(job, done): Promise<void> {
     const Logger: Logger = Container.get('logger');
     try {
-      Logger.debug('✌️ Email Sequence Job triggered!');
-      const { email, name }: { [key: string]: string } = job.attrs.data;
+      Logger.debug('✌️ Username Sequence Job triggered!');
+      const { username, name }: { [key: string]: string } = job.attrs.data;
       //const mailerServiceInstance = Container.get(MailerService);
-      //await mailerServiceInstance.SendWelcomeEmail(email);
+      //await mailerServiceInstance.SendWelcomeUsername(username);
       done();
     } catch (e) {
-      Logger.error('🔥 Error with Email Sequence Job: %o', e);
+      Logger.error('🔥 Error with Username Sequence Job: %o', e);
       done(e);
     }
   }

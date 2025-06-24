@@ -26,11 +26,17 @@ export default async ({ expressApp }) => {
     model: require('../models/session').default,
   };
 
+  const gameModel = {
+    name: 'gameModel',
+    model: require('../models/game').default,
+  };
+
   const { logger } = await dependencyInjectorLoader({
     mongoConnection,
     models: [
       playerModel,
-      sessionModel
+      sessionModel,
+      gameModel
     ],
   });
 

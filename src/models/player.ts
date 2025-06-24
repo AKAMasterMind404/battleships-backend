@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 
 const Player = new mongoose.Schema(
   {
-    email: {
+    username: {
       type: String,
       required: [true, 'Please enter a full name'],
       unique: true,

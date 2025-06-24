@@ -1,17 +1,17 @@
 export interface IPlayer {
     _id: string;
-    email: string;
+    username: string;
     password: string;
 }
 
 export class PlayerCreateDto {
     _id: string;
-    email: string;
+    username: string;
     password: string;
 }
 
 export class AuthDto {
-    email: string;
+    username: string;
     password: string;
     token: string;
 }

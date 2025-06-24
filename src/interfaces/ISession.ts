@@ -1,7 +1,7 @@
 export interface ISession {
     _id?: string;
     user_id: string;
-    email: string;
+    username: string;
     token: string;
     is_signed_in: boolean;
     created_at: Date;

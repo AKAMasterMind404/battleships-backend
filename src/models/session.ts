@@ -10,7 +10,7 @@ const Session = new mongoose.Schema(
     user_id: {
       type: String,
     },
-    email: {
+    username: {
       type: String,
     },
     token: {

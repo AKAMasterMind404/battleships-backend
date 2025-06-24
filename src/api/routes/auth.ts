@@ -24,7 +24,7 @@ export default (app: Router) => {
   route.post('/login', async (req: Request, res: Response) => {
     try {
       const dto = authService.buildAuthDto(req, false);
-      const data = await authService.loginWithEmailAndPassword(dto);
+      const data = await authService.loginWithUsernameAndPassword(dto);
 
       return res.json({ data });
     }
@@ -48,7 +48,7 @@ export default (app: Router) => {
   route.post('/register', async (req: Request, res: Response) => {
     try {
       const dto = authService.buildAuthDto(req, false);
-      const data = await authService.registerWithEmailAndPassword(dto);
+      const data = await authService.registerWithUsernameAndPassword(dto);
 
       return res.json({ data });
     }

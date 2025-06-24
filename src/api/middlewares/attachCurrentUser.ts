@@ -26,7 +26,6 @@ const attachCurrentUser = async (req, res, next) => {
         req.isTokenPresent = true;
         req.claims = decoded;
         req.claims.isBearerToken = true;
-        req.claims.isStudent = decoded.roles.includes("ROLE_STUDENT");
         req.claims.token = token;
         logger.info("orgId:"+ req.claims.orgId +"and masterOrgId:" + req.claims.masterOrgId);        
         logger.info("userinfo - name:" + req.claims.name +",role:"+ decoded.roles)

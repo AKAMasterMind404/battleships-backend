@@ -25,10 +25,18 @@ export default class AuthService {
 
     public buildAuthDto(req: any, isLogout: boolean): AuthDto {
         const dto = {
-            password: req.body.password ? HelperService.base64EncodeString(req.body.password) : undefined,
-            email: req.body.email,
+            password: req.body.hasOwnProperty('password') ? HelperService.base64EncodeString(req.body.password) : undefined,
+            username: req.body.hasOwnProperty('username') ? req.body.username : undefined,
             token: req.body.token // Middleware throws error while decrypting, hence passed through body
         } as AuthDto;
+
+        if (!dto.username) {
+            throw new Error('Username required!');
+        }
+
+        if (!dto.password || dto.password.trim().length < 6) {
+            throw new Error("Enter a password longer than 6 characters!");
+        }
 
         return dto;
     }
@@ -45,10 +53,10 @@ export default class AuthService {
         return { data };
     }
 
-    public async registerWithEmailAndPassword(dto: AuthDto) {
+    public async registerWithUsernameAndPassword(dto: AuthDto) {
         try {
             const newUser = await this.playerModel.create({
-                email: dto.email,
+                username: dto.username,
                 password: dto.password
             });
 
@@ -63,8 +71,8 @@ export default class AuthService {
         return { data };
     }
 
-    public async loginWithEmailAndPassword(dto: AuthDto) {
-        let data = await this.getUserWithEmailAndPassword(dto);
+    public async loginWithUsernameAndPassword(dto: AuthDto) {
+        let data = await this.getUserWithUsernameAndPassword(dto);
         const userData = (data as any).toObject();
         const existingSessionToken = await this.getExistingUserSession(userData);
 
@@ -108,7 +116,7 @@ export default class AuthService {
     }
 
     private async getExistingUserSession(dto: PlayerCreateDto) {
-        const existing = await this.sessionModel.findOne({ email: dto.email, _id: dto._id });
+        const existing = await this.sessionModel.findOne({ username: dto.username, _id: dto._id });
 
         if (!existing) return null;
 
@@ -126,9 +134,9 @@ export default class AuthService {
         return token;
     }
 
-    private async getUserWithEmailAndPassword(dto: AuthDto) {
-        const user = await this.playerModel.findOne({ email: dto.email, password: dto.password });
-        if (!user) throw new Error("Email / Password combination incorrect!");
+    private async getUserWithUsernameAndPassword(dto: AuthDto) {
+        const user = await this.playerModel.findOne({ username: dto.username, password: dto.password });
+        if (!user) throw new Error("Username / Password combination incorrect!");
 
         return user as PlayerCreateDto;
     }
