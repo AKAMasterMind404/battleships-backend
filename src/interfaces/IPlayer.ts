@@ -1,11 +1,11 @@
 export interface IPlayer {
-    id: number;
+    _id: string;
     email: string;
     password: string;
 }
 
 export class PlayerCreateDto {
-    id: number;
+    _id: string;
     email: string;
     password: string;
 }

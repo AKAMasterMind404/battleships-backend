@@ -3,7 +3,6 @@ import HelperService from '../utils/helpers';
 import { decode } from 'jwt-simple';
 import config from '../config';
 import { AuthDto, PlayerCreateDto } from '../interfaces/IPlayer';
-import player from '../models/player';
 
 @Service()
 export default class AuthService {
@@ -109,7 +108,7 @@ export default class AuthService {
     }
 
     private async getExistingUserSession(dto: PlayerCreateDto) {
-        const existing = await this.sessionModel.findOne({ email: dto.email, id: dto.id });
+        const existing = await this.sessionModel.findOne({ email: dto.email, _id: dto._id });
 
         if (!existing) return null;
 

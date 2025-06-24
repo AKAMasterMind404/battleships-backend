@@ -1,5 +1,5 @@
 export interface ISession {
-    session_id: number;
+    _id?: string;
     user_id: string;
     email: string;
     token: string;

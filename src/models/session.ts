@@ -3,9 +3,8 @@ import { ISession } from '../interfaces/ISession';
 
 const Session = new mongoose.Schema(
   {
-    session_id: {
-      type: Number,
-      required: true,
+    _id: {
+      type: String,
       unique: true,
     },
     user_id: {

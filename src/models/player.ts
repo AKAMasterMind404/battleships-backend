@@ -6,6 +6,7 @@ const Player = new mongoose.Schema(
     email: {
       type: String,
       required: [true, 'Please enter a full name'],
+      unique: true,
       index: true,
     },
     password: {
