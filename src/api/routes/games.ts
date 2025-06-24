@@ -12,7 +12,7 @@ export default (app: Router) => {
   route.post('/', middlewares.attachCurrentUser, async (req: Request, res: Response) => {
     try {
       const dto = gameService.buildGameCreateDto(req);
-      const data = await gameService.createGame(dto);
+      const { data } = await gameService.createNewOrMatchGame(dto);
 
       return res.json({ data });
     }

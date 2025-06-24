@@ -17,7 +17,7 @@ const Game = new mongoose.Schema(
     },
     player2: {
       type: String,
-      default: ''
+      default: null
     },
     p1Shots: {
       type: Array,
