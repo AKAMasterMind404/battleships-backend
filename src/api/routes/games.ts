@@ -21,6 +21,18 @@ export default (app: Router) => {
     }
   });
 
+  route.put('/:game_id', middlewares.attachCurrentUser, async (req: Request, res: Response) => {
+    try {
+      const dto = gameService.buildGamePlayDto(req);
+      const { data } = await gameService.playShot(dto);
+
+      return res.json({ data });
+    }
+    catch (e) {
+      return res.status(500).json({ 'error': `${e.message.toString()}` });
+    }
+  });
+
   route.get('/:id?', middlewares.attachCurrentUser, async (req: Request, res: Response) => {
     try {
       const dto = gameService.buildGameGetDto(req);

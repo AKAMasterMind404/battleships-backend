@@ -15,6 +15,12 @@ export class GameCreateDto {
     ai: string;
 }
 
+export class GamePlayDto {
+    id: string;
+    shot: string;
+    player: string;
+}
+
 export class GameGetDto {
     id: string;
     max: number;
