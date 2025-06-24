@@ -1,12 +1,12 @@
 export interface IGame {
-    winner: string;
+    status: number;
+    position: number;
     player1: string;
     player2: string;
-    turn: string;
-    p1Ships: string;
-    p2Ships: string;
-    p1Shots: string;
-    p2Shots: string;
+    p1Shots: string[];
+    p2Shots: string[];
+    p1Ships: string[];
+    p2Ships: string[];
 }
 
 export class GameCreateDto {

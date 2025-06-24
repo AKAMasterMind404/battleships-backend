@@ -3,36 +3,37 @@ import { IGame } from '../interfaces/IGame';
 
 const Game = new mongoose.Schema(
   {
-    winner: {
-      type: String,
+    status: {
+      type: Number,
       default: null
+    },
+    position: {
+      type: Number,
+      default: 1
     },
     player1: {
       type: String,
-      required: true,
+      required: true
     },
     player2: {
-      type: String
-    },
-    turn: {
-      type: String,
-      required: true,
-    },
-    p1Ships: {
-      type: String,
-      required: true,
-    },
-    p2Ships: {
       type: String,
       default: ''
     },
     p1Shots: {
-      type: String,
-      default: ''
+      type: Array,
+      default: []
     },
     p2Shots: {
-      type: String,
-      default: ''
+      type: Array,
+      default: []
+    },
+    p1Ships: {
+      type: Array,
+      required: true
+    },
+    p2Ships: {
+      type: Array,
+      default: []
     },
   },
   { collection: 'games', timestamps: true },

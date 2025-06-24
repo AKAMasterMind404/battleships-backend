@@ -38,14 +38,13 @@ export default class GameService {
         try {
             const gameObject = {
                 player1: dto.player1,
-                turn: dto.player1,
-                p1Ships: dto.ships.join(',')
+                p1Ships: dto.ships
             };
 
             const game = await this.gameModel.create(gameObject);
             return { data: game };
         } catch (error) {
-            throw Error('Trouble fetching games!');
+            throw Error('Could not create game!');
         }
     }
 
