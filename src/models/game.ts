@@ -35,6 +35,10 @@ const Game = new mongoose.Schema(
       type: Array,
       default: []
     },
+    ai: {
+      type: String,
+      default: null
+    }
   },
   { collection: 'games', timestamps: true },
 );

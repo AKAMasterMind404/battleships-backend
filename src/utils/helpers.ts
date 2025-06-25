@@ -46,6 +46,15 @@ export default class HelperService {
     return encoded;
   }
 
+  public static shuffleRandomly(positions: string[]) {
+    return positions.sort(() => 0.5 - Math.random())
+  }
+
+  public static getRandomItem(items: any[]) {
+    const randomIndex = Math.floor(Math.random() * items.length);
+    return items[randomIndex];
+  }
+
   public static base64EncodeString(inputString: string): string {
     const binaryData = Buffer.from(inputString, 'utf-8');
     const base64String = binaryData.toString('base64');

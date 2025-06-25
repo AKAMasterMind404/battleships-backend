@@ -2,6 +2,7 @@ export interface IGame {
     _id: any,
     status: number;
     position: number;
+    ai?: string;
     player1: string;
     player2: string;
     p1Shots: string[];
