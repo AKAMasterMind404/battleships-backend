@@ -19,6 +19,7 @@ export default class GameService {
         dto.id = req.params.id;
         dto.max = req.body.hasOwnProperty('max') ? +req.body.max : 10;
         dto.page = req.body.hasOwnProperty('page') ? +req.body.page : 0;
+        dto.player = req.claims._id;
         return dto;
     }
 
@@ -70,7 +71,7 @@ export default class GameService {
                 isNew = 1;
             }
 
-            return { data: { ...game, g: isNew } };
+            return { data: { ...this.wrapData(game, dto.player1, isNew), g: isNew } };
         } catch (error) {
             throw Error('Could not create game!');
         }
@@ -98,15 +99,41 @@ export default class GameService {
         try {
             let data;
             if (dto.id) {
-                data = await this.gameModel.findById(dto.id);
+                const gameData = await this.gameModel.findById(dto.id);
+                data = this.wrapData(gameData, dto.player);
             } else {
-                data = await this.gameModel.find().skip(dto.max * dto.page).limit(dto.max);
+                const gameList = await this.gameModel.find().skip(dto.max * dto.page).limit(dto.max);
+                data = gameList.map((e) => this.wrapData(e, dto.player));
             }
 
             return { data };
         } catch (error) {
             throw Error('Trouble fetching games!');
         }
+    }
+
+    private wrapData(gameData: IGame, playerId, isNewGame: number = 1) {
+        const enemyShots = gameData.player1 == playerId ? gameData.p2Shots : gameData.p1Shots;
+        const playerShots = gameData.player1 == playerId ? gameData.p1Shots : gameData.p2Shots;
+
+        const ships = gameData.player1 == playerId || isNewGame == 0 ? gameData.p1Ships : gameData.p2Ships;
+        const enemyShips = gameData.player1 == playerId ? gameData.p2Ships : gameData.p1Ships;
+
+        const wrecks = enemyShots.filter((shot) => ships.includes(shot));
+        const sunk = playerShots.filter((shot) => enemyShips.includes(shot));
+        const shots = playerShots;
+
+        return {
+            _id: gameData._id,
+            status: gameData.status,
+            position: gameData.position,
+            player1: gameData.player1,
+            player2: gameData.player2,
+            ships: ships.filter((s) => !wrecks.includes(s)),
+            wrecks,
+            sunk,
+            shots
+        };
     }
 
     private getUpdateBody(game: IGame, dto: GamePlayDto, won: any): { updateBody: any; } {
@@ -125,11 +152,15 @@ export default class GameService {
     }
 
     private getGameResult(game: IGame, dto: GamePlayDto): { message: any; sunk_ship: any; won: any; } {
+        if (!game) {
+            throw new Error('Game does not exist!');
+        }
+
         if (game.player1 != dto.player && game.player2 != dto.player) {
             throw new Error('You are not a part of this game!');
         }
 
-        if (game.status != null) {
+        if (game.status > 0) {
             throw new Error("This game is already over!");
         }
 

@@ -1,4 +1,5 @@
 export interface IGame {
+    _id: any,
     status: number;
     position: number;
     player1: string;
@@ -25,4 +26,5 @@ export class GameGetDto {
     id: string;
     max: number;
     page: number;
+    player: string;
 }

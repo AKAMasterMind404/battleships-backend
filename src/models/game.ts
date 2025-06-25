@@ -5,7 +5,7 @@ const Game = new mongoose.Schema(
   {
     status: {
       type: Number,
-      default: null
+      default: 0
     },
     position: {
       type: Number,
