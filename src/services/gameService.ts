@@ -130,6 +130,7 @@ export default class GameService {
             player1: gameData.player1,
             player2: gameData.player2,
             ships: ships.filter((s) => !wrecks.includes(s)),
+            playerTurn: gameData.status == 0 && gameData.position == playerId,
             wrecks,
             sunk,
             shots
