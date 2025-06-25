@@ -6,10 +6,10 @@
 
 Using Handle bars
 
-https://docs.sendgrid.com/for-developers/sending-email/using-handlebars
+https://docs.sendgrid.com/for-developers/sending-username/using-handlebars
 
 
 Using Sengrid Templates
 
-https://docs.sendgrid.com/ui/sending-email/how-to-send-an-email-with-dynamic-transactional-templates
+https://docs.sendgrid.com/ui/sending-username/how-to-send-an-username-with-dynamic-transactional-templates
 

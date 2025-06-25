@@ -15,11 +15,7 @@ export default ({ app }: { app: express.Application }) => {
     dsn:  "https://0c739a755090401aa36e87771597cda8@o726296.ingest.sentry.io/5782639",
     tracesSampleRate: 1.0,
     debug: true,
-    integrations: [
-      new RewriteFrames({
-        root: global.__dirname,
-      }),
-    ],
+    integrations: [],
   });
 
   const errorHandler = new ErrorHandler(Logger);

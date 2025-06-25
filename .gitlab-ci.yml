@@ -56,7 +56,7 @@ deploy_stg:
     #- git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/${DEPLOY_REPO}
     - cd argoyaml && git checkout master
     - git config --global user.name ${WAJ_USER}
-    - git config --global user.email ${WAJ_USER}
+    - git config --global user.username ${WAJ_USER}
   script:
     - sed 's/PLACEHOLDERENV/stg/g' ../../k8.yml > ./kongstaging/stg/notification/notification-stg.yml
     - sed -i 's/REPLICAS/1/g' ./kongstaging/stg/notification/notification-stg.yml
@@ -89,7 +89,7 @@ deploy_prod:
     #- git clone https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.com/${DEPLOY_REPO}
     - cd argoyaml && git checkout master
     - git config --global user.name ${WAJ_USER}
-    - git config --global user.email ${WAJ_USER}
+    - git config --global user.username ${WAJ_USER}
   script:
     - sed 's/PLACEHOLDERENV/prod/g' ../../k8.yml > ./kong_prod/notification/notification-prod.yml
     - sed -i 's/REPLICAS/1/g' ./kong_prod/notification/notification-prod.yml

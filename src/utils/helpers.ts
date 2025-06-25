@@ -1,5 +1,7 @@
 const Hashids = require('hashids/cjs');
+import jwt from 'jsonwebtoken';
 import { Service, Inject } from 'typedi';
+import config from '../config';
 
 @Service()
 export default class HelperService {
@@ -27,6 +29,42 @@ export default class HelperService {
         }
       }
     }
+  }
+
+  public generateJwtForPayload(payload: object): string {
+    const plainPayload = typeof payload === 'object' && 'toObject' in payload
+      ? (payload as any).toObject()
+      : payload;
+
+    const token = jwt.sign(plainPayload, config.jwtSecret, { expiresIn: '9999999s' });
+    return token;
+  }
+
+  public validatedEncodedPassword(pwd: string) {
+    if (pwd.trim().length < 6) throw new Error('Password length must be atleast 6 characters long!');
+    const encoded = HelperService.base64EncodeString(pwd);
+    return encoded;
+  }
+
+  public static shuffleRandomly(positions: string[]) {
+    return positions.sort(() => 0.5 - Math.random())
+  }
+
+  public static getRandomItem(items: any[]) {
+    const randomIndex = Math.floor(Math.random() * items.length);
+    return items[randomIndex];
+  }
+
+  public static base64EncodeString(inputString: string): string {
+    const binaryData = Buffer.from(inputString, 'utf-8');
+    const base64String = binaryData.toString('base64');
+    return base64String;
+  }
+
+  public static base64DecodeString(base64String: string): string {
+    const binaryData = Buffer.from(base64String, 'base64');
+    const decodedString = binaryData.toString('utf-8');
+    return decodedString;
   }
 
   isNumber = function isNumber(a) {
