@@ -6,8 +6,6 @@ import express from 'express';
 
 import Logger from './loaders/logger';
 
-import socketLoader from "./loaders/socket";
-
 async function startServer() {
   const app = express();
   /**

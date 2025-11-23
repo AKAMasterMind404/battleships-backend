@@ -1,8 +1,8 @@
 import config from '../config';
 import UsernameSequenceJob from '../jobs/emailSequence';
-import Agenda from 'agenda';
+// import Agenda from 'agenda';
 
-export default ({ agenda }: { agenda: Agenda }) => {
+// export default ({ agenda }: { agenda: Agenda }) => {
   // agenda.define(
   //   'send-username',
   //   { priority: 'high', concurrency: config.agenda.concurrency },
@@ -11,4 +11,4 @@ export default ({ agenda }: { agenda: Agenda }) => {
   // );
 
   // agenda.start();
-};
+// };

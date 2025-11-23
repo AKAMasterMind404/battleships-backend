@@ -1,4 +1,4 @@
-import express,  { NextFunction, Request, Response } from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
 import routes from '../api';
@@ -6,17 +6,17 @@ import config from '../config';
 import { ErrorHandler } from '../api/middlewares/error-handler';
 import { BaseError } from '../api/middlewares/base-error';
 import Logger from './logger';
-import * as Sentry from "@sentry/node";
-import { RewriteFrames } from "@sentry/integrations";
+// import * as Sentry from "@sentry/node";
+// import { RewriteFrames } from "@sentry/integrations";
 
 export default ({ app }: { app: express.Application }) => {
 
-  Sentry.init({
-    dsn:  "https://0c739a755090401aa36e87771597cda8@o726296.ingest.sentry.io/5782639",
-    tracesSampleRate: 1.0,
-    debug: true,
-    integrations: [],
-  });
+  // Sentry.init({
+  //   dsn: "https://0c739a755090401aa36e87771597cda8@o726296.ingest.sentry.io/5782639",
+  //   tracesSampleRate: 1.0,
+  //   debug: true,
+  //   integrations: [],
+  // });
 
   const errorHandler = new ErrorHandler(Logger);
 
