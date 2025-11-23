@@ -12,8 +12,6 @@ RUN npm install
 
 RUN npm run build
 
-COPY ./src/loaders/mongocerts.crt ./build/loaders
-
 # Edtestpaper app
 FROM node:16-alpine
 

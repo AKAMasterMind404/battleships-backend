@@ -16,7 +16,7 @@ async function startServer() {
    **/
   await require('./loaders').default({ expressApp: app });
 
-  app.listen(config.port, () => {
+  app.listen(config.port, "0.0.0.0", () => {
     Logger.info(`
     ################################################
     🛡️ Database Server connected on : ${config.databaseURL} 🛡️
