@@ -9,6 +9,19 @@ export default (app: Router) => {
   app.use('/games', route);
   const gameService = Container.get(GameService);
 
+  
+  route.delete('/:game_id', middlewares.attachCurrentUser, async (req: Request, res: Response) => {
+    try {
+      const dto = gameService.buildGamePlayDto(req, true);
+      const { data } = await gameService.deleteGame(dto.id);
+
+      return res.json({ data });
+    }
+    catch (e) {
+      return res.status(500).json({ 'error': `${e.message.toString()}` });
+    }
+  });
+
   route.post('/', middlewares.attachCurrentUser, async (req: Request, res: Response) => {
     try {
       const dto = gameService.buildGameCreateDto(req);
@@ -23,7 +36,7 @@ export default (app: Router) => {
 
   route.put('/:game_id', middlewares.attachCurrentUser, async (req: Request, res: Response) => {
     try {
-      const dto = gameService.buildGamePlayDto(req);
+      const dto = gameService.buildGamePlayDto(req, false);
       const { data } = await gameService.playShot(dto);
 
       return res.json({ data });

@@ -32,7 +32,7 @@ export default class GameService {
         return dto;
     }
 
-    public buildGamePlayDto(req: any): GamePlayDto {
+    public buildGamePlayDto(req: any, isDelete: boolean): GamePlayDto {
         const dto = new GamePlayDto();
         dto.id = req.params.game_id;
         dto.shot = req.body.shot;
@@ -42,7 +42,7 @@ export default class GameService {
             throw new Error("Game Id required to play!");
         }
 
-        if (!dto.shot) {
+        if (!isDelete && !dto.shot) {
             throw new Error("Choose a shot to play!");
         }
 
@@ -60,6 +60,15 @@ export default class GameService {
         }
 
         return dto;
+    }
+
+        public async deleteGame(id: string): Promise<{ data: any }> {
+        try {
+            const result = await this.gameModel.findByIdAndDelete(id);
+            return { data: result };
+        } catch (error) {
+            throw Error('Could not create game!');
+        }
     }
 
     public async createNewOrMatchGame(dto: GameCreateDto): Promise<{ data: any }> {
